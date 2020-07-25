@@ -1,5 +1,5 @@
 class Apple {
-    COLOR="FF0000"
+    COLOR="#701515"
 
     constructor(x, y, size) {
 		this.pos= { x: x, y: y }
@@ -9,13 +9,7 @@ class Apple {
 
     draw(ctx) {
 		ctx.fillStyle = this.COLOR
-		ctx.beginPath()
 		ctx.fillRect(this.pos.x, this.pos.y, this.size, this.size)
-		ctx.fill()
-    }
-
-    getInfo() {
-		return [this.pos.x, this.pos.y, this.pos.x+this.size, this.pos.y+this.size]
     }
 	
 	collidesWith(player) {
@@ -32,4 +26,6 @@ class Apple {
 			else return false
 		}
 	}
+
+	
 }
