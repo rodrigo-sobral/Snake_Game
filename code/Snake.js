@@ -10,11 +10,6 @@ class Snake extends Apple {
 		}
 		this.speed=this.DEFAULT_SPEED
 	}
-	
-	draw(ctx) {
-		ctx.fillStyle = this.COLOR
-		ctx.fillRect(this.pos.x, this.pos.y, this.size, this.size)
-    }
 
 	moving(cw, ch) {
         if (this.status.goingLeft==true) {
@@ -36,19 +31,17 @@ class Snake extends Apple {
 		if (keyType=="keydown") {
 			if ((keyCode=="ArrowUp" || keyCode=="KeyW") && this.status.goingDown!=true) {
 				if (this.status.goingUp==true && this.speed<this.MAX_SPEED) this.speed++ 
-				else { this.status.goingUp=true; this.status.goingLeft=false; this.status.goingRight=false }
+				else this.status.goingUp=true; this.status.goingLeft=false; this.status.goingRight=false;
 			} else if ((keyCode=="ArrowDown" || keyCode=="KeyS") && this.status.goingUp!=true) {
 				if (this.status.goingDown==true && this.speed<this.MAX_SPEED) this.speed++ 
-				else { this.status.goingDown=true; this.status.goingLeft=false; this.status.goingRight=false }
+				else this.status.goingDown=true; this.status.goingLeft=false; this.status.goingRight=false;
 			} else if ((keyCode=="ArrowRight" || keyCode=="KeyD") && this.status.goingLeft!=true) {
 				if (this.status.goingRight==true && this.speed<this.MAX_SPEED) this.speed++ 
-				else { this.status.goingRight=true; this.status.goingUp=false; this.status.goingDown=false }
+				else this.status.goingRight=true; this.status.goingUp=false; this.status.goingDown=false; 
 			} else if ((keyCode=="ArrowLeft" || keyCode=="KeyA") && this.status.goingRight!=true) {
 				if (this.status.goingLeft==true && this.speed<this.MAX_SPEED) this.speed++ 
-				else { this.status.goingLeft=true; this.status.goingUp=false; this.status.goingDown=false }
+				else this.status.goingLeft=true; this.status.goingUp=false; this.status.goingDown=false; 
 			}
 		} else this.speed=this.DEFAULT_SPEED
 	}
-
-	
 }
