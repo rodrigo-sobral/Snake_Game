@@ -34,6 +34,7 @@ function detectKeyboard(player) {
 function renderGame(ctx, player, apple) {
 	let ch= ctx.canvas.height
 	let cw= ctx.canvas.width
+	player[0].status.dead=false
 
 	//	DRAWING
 	ctx.clearRect(0, 0, cw, ch)	
@@ -45,10 +46,16 @@ function renderGame(ctx, player, apple) {
 	snakeMovement(player, cw, ch)
 
 	//	COLLISIONS
-	if (apple.collidesWith(player[0])==true) apple.eaten=true
+	//	With Apple
+	if (apple.collidesWith(player[0])) apple.eaten=true
+	//	With Snake
+	for (let i=2; i < player.length; i++) {
+		if (player[0].collidesWith(player[i])) player[0].status.dead=true
+	}
 
+	if (player[0].status.dead) console.log("faleceu idiota")
 	//	APPLE EATEN/GENERATION
-	if (apple.eaten==true) {
+	if (apple.eaten) {
 		apple.pos.x= Math.floor(Math.random()*(cw-DEF_SQR_SZ))
 		apple.pos.y= Math.floor(Math.random()*(ch-DEF_SQR_SZ))
 		apple.eaten=false
@@ -96,10 +103,9 @@ function changeDirect(to, playerbehind, playerinfront) {
 		if (to=="KeyD") playerbehind.pos.x=playerinfront.pos.x-playerbehind.size
 		else playerbehind.pos.x=playerinfront.pos.x+playerbehind.size
 		playerbehind.detectMovement("keydown", to)
-	} else if (to=="KeyS" || to=="KeyW" && ((playerbehind.status.goingLeft && playerbehind.pos.x<=playerinfront.pos.x) || (playerbehind.status.goingRight && playerbehind.pos.x>=playerinfront.pos.x))) {
+	} else if ((to=="KeyS" || to=="KeyW") && ((playerbehind.status.goingLeft && playerbehind.pos.x<=playerinfront.pos.x) || (playerbehind.status.goingRight && playerbehind.pos.x>=playerinfront.pos.x))) {
 		playerbehind.pos.x=playerinfront.pos.x 
-		if (to=="KeyS") 
-			playerbehind.pos.y=playerinfront.pos.y-playerbehind.size
+		if (to=="KeyS") playerbehind.pos.y=playerinfront.pos.y-playerbehind.size
 		else playerbehind.pos.y=playerinfront.pos.y+playerbehind.size
 		playerbehind.detectMovement("keydown", to)
 	} 

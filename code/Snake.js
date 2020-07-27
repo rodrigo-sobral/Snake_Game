@@ -12,16 +12,16 @@ class Snake extends Apple {
 	}
 
 	moving(cw, ch) {
-        if (this.status.goingLeft==true) {
+        if (this.status.goingLeft) {
             if(this.pos.x>0) this.pos.x-=this.speed
             else { this.pos.x=0; this.status.dead=true }
-        } else if (this.status.goingRight==true) {
+        } else if (this.status.goingRight) {
             if(this.pos.x+this.size<cw) this.pos.x+=this.speed
             else { this.pos.x=cw-this.size; this.status.dead=true }
-        } else if (this.status.goingUp==true) {
+        } else if (this.status.goingUp) {
             if(this.pos.y>0) this.pos.y-=this.speed
             else { this.pos.y=0; this.status.dead=true }
-        } else if (this.status.goingDown==true) {
+        } else if (this.status.goingDown) {
             if(this.pos.y+this.size<ch) this.pos.y+=this.speed
             else { this.pos.y=ch-this.size; this.status.dead=true }
         }
@@ -29,17 +29,17 @@ class Snake extends Apple {
 	
 	detectMovement(keyType, keyCode) {
 		if (keyType=="keydown") {
-			if ((keyCode=="ArrowUp" || keyCode=="KeyW") && this.status.goingDown!=true) {
-				if (this.status.goingUp==true && this.speed<this.MAX_SPEED) this.speed++ 
+			if ((keyCode=="ArrowUp" || keyCode=="KeyW") && !this.status.goingDown) {
+				if (this.status.goingUp && this.speed<this.MAX_SPEED) this.speed++ 
 				else this.status.goingUp=true; this.status.goingLeft=false; this.status.goingRight=false;
-			} else if ((keyCode=="ArrowDown" || keyCode=="KeyS") && this.status.goingUp!=true) {
-				if (this.status.goingDown==true && this.speed<this.MAX_SPEED) this.speed++ 
+			} else if ((keyCode=="ArrowDown" || keyCode=="KeyS") && !this.status.goingUp) {
+				if (this.status.goingDown && this.speed<this.MAX_SPEED) this.speed++ 
 				else this.status.goingDown=true; this.status.goingLeft=false; this.status.goingRight=false;
-			} else if ((keyCode=="ArrowRight" || keyCode=="KeyD") && this.status.goingLeft!=true) {
-				if (this.status.goingRight==true && this.speed<this.MAX_SPEED) this.speed++ 
+			} else if ((keyCode=="ArrowRight" || keyCode=="KeyD") && !this.status.goingLeft) {
+				if (this.status.goingRight && this.speed<this.MAX_SPEED) this.speed++ 
 				else this.status.goingRight=true; this.status.goingUp=false; this.status.goingDown=false; 
-			} else if ((keyCode=="ArrowLeft" || keyCode=="KeyA") && this.status.goingRight!=true) {
-				if (this.status.goingLeft==true && this.speed<this.MAX_SPEED) this.speed++ 
+			} else if ((keyCode=="ArrowLeft" || keyCode=="KeyA") && !this.status.goingRight) {
+				if (this.status.goingLeft && this.speed<this.MAX_SPEED) this.speed++ 
 				else this.status.goingLeft=true; this.status.goingUp=false; this.status.goingDown=false; 
 			}
 		} else this.speed=this.DEFAULT_SPEED
