@@ -1,10 +1,12 @@
 class Apple {
-    COLOR="#701515"
+	COLOR="#701515"
+	POINTS=10
 
     constructor(x, y, size) {
 		this.pos= { x: x, y: y }
 		this.size= size
 		this.eaten=false
+		this.shown=true
     }
 
     draw(ctx) {

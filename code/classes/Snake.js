@@ -1,3 +1,5 @@
+"use strict"
+
 class Snake extends Apple {
 	DEFAULT_SPEED= 3
 	MAX_SPEED=6
@@ -5,25 +7,23 @@ class Snake extends Apple {
 
     constructor(x, y, size) {
 		super(x, y, size)
-		this.status= {
-			goingUp:false, goingDown:false, goingRight:false, goingLeft:false, dead:false
-		}
+		this.status= { goingUp:false, goingDown:false, goingRight:false, goingLeft:false }
 		this.speed=this.DEFAULT_SPEED
 	}
 
 	moving(cw, ch) {
         if (this.status.goingLeft) {
             if(this.pos.x>0) this.pos.x-=this.speed
-            else { this.pos.x=0; this.status.dead=true }
+            else { this.pos.x=0; return false }
         } else if (this.status.goingRight) {
             if(this.pos.x+this.size<cw) this.pos.x+=this.speed
-            else { this.pos.x=cw-this.size; this.status.dead=true }
+            else { this.pos.x=cw-this.size; return false }
         } else if (this.status.goingUp) {
             if(this.pos.y>0) this.pos.y-=this.speed
-            else { this.pos.y=0; this.status.dead=true }
+            else { this.pos.y=0; return false }
         } else if (this.status.goingDown) {
             if(this.pos.y+this.size<ch) this.pos.y+=this.speed
-            else { this.pos.y=ch-this.size; this.status.dead=true }
+            else { this.pos.y=ch-this.size; return false }
         }
 	}
 	
@@ -44,4 +44,5 @@ class Snake extends Apple {
 			}
 		} else this.speed=this.DEFAULT_SPEED
 	}
+
 }

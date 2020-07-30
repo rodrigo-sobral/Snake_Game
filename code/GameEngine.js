@@ -4,109 +4,79 @@
 	window.addEventListener("load", main)
 }());
 
-const DEF_SQR_SZ=25
-
 function main() {
-	var canvas = document.getElementById("myCanvas")
-	var ctx = canvas.getContext("2d")
+	let canvas = document.getElementById("myCanvas")
+	let ctx = canvas.getContext("2d")
 	
-	let player= [new Snake(50, 50,  DEF_SQR_SZ)]
-	let apple= generateApple(ctx.canvas.width, ctx.canvas.height)
+	let play= new Play(ctx.canvas.width, ctx.canvas.height)
 
-	animLoop(ctx, player, apple)
+	animLoop(ctx, play)
 }
 
-function animLoop(ctx, player, apple) {
-	var al = function() { animLoop(ctx, player, apple) }
+function animLoop(ctx, play) {
+	var al = function() { animLoop(ctx, play) }
 	window.requestAnimationFrame(al)
 	
-	renderGame(ctx, player, apple)
+	renderGame(ctx, play)
 }
 
-function detectKeyboard(player) {
+function detectKeyboard(snake_head) {
 	function keyHandler(ev) { 
-		player[0].detectMovement(ev.type, ev.code)
+		snake_head.detectMovement(ev.type, ev.code)
 	}
 	window.addEventListener("keydown", keyHandler)
 	window.addEventListener("keyup", keyHandler)
 }
 
-function renderGame(ctx, player, apple) {
+function renderGame(ctx, play) {
 	let ch= ctx.canvas.height
 	let cw= ctx.canvas.width
-	player[0].status.dead=false
-
-	//	DRAWING
-	ctx.clearRect(0, 0, cw, ch)	
-	apple.draw(ctx)
-	for (let i = 0; i < player.length; i++) player[i].draw(ctx)
+	play.updatePointsBox()
 
 	//	MOVEMENTS
-	detectKeyboard(player)
-	snakeMovement(player, cw, ch)
+	detectKeyboard(play.snake[0])
+	snakeMovement(play.snake, cw, ch)
 
 	//	COLLISIONS
 	//	With Apple
-	if (apple.collidesWith(player[0])) apple.eaten=true
+	if (!play.special_apple_on  && play.apple.collidesWith(play.snake[0])) play.apple.eaten=true
+	else if (play.special_apple_on && play.special_apple.collidesWith(play.snake[0])) play.special_apple.eaten=true
 	//	With Snake
-	for (let i=2; i < player.length; i++) {
-		if (player[0].collidesWith(player[i])) player[0].status.dead=true
+	for (let i=2; i < play.snake.length; i++) {
+		if (play.snake[0].collidesWith(play.snake[i])) play.dead=true
 	}
-
-	if (player[0].status.dead) console.log("faleceu idiota")
+	
 	//	APPLE EATEN/GENERATION
-	if (apple.eaten) {
-		apple.pos.x= Math.floor(Math.random()*(cw-DEF_SQR_SZ))
-		apple.pos.y= Math.floor(Math.random()*(ch-DEF_SQR_SZ))
-		apple.eaten=false
-		player=growSnake(player)
-	}	
+	play.eatApple(cw, ch)
+
+	//	DRAWING
+	ctx.clearRect(0, 0, cw, ch)	
+	if (play.special_apple_on) play.special_apple.draw(ctx)
+	else play.apple.draw(ctx)
+	for (let i = 0; i < play.snake.length; i++) play.snake[i].draw(ctx)
 }
 
-function generateApple(cw, ch) {
-	return new Apple(Math.floor(Math.random()*(cw-DEF_SQR_SZ)), Math.floor(Math.random()*(ch-DEF_SQR_SZ)), DEF_SQR_SZ)
-}
-
-function growSnake(player) {
-	const last_snake= player[player.length-1]
-	if (player[0].status.goingRight) {
-		player.push(new Snake(0, last_snake.pos.y, last_snake.size))
-		player[player.length-1].pos.x= last_snake.pos.x-last_snake.size
-	} else if (player[0].status.goingLeft) {
-		player.push(new Snake(0, last_snake.pos.y, last_snake.size))
-		player[player.length-1].pos.x= last_snake.pos.x+last_snake.size
-	} else if (player[0].status.goingUp) {
-		player.push(new Snake(last_snake.pos.x, 0, last_snake.size))
-		player[player.length-1].pos.y= last_snake.pos.y+last_snake.size
-	} else if (player[0].status.goingDown) {
-		player.push(new Snake(last_snake.pos.x, 0, last_snake.size))
-		player[player.length-1].pos.y= last_snake.pos.y-last_snake.size
-	}  Object.assign(player[player.length-1].status, last_snake.status)
-	return player
-}
-
-function snakeMovement(player, cw, ch) {
-	player[0].moving(cw, ch)
-	for (let i = 1; i < player.length; i++) {
-		player[i].speed=player[i-1].speed
-		player[i].moving(cw, ch)
-		if (player[i-1].status.goingRight && !player[i].status.goingRight) changeDirect("KeyD", player[i], player[i-1])
-		else if (player[i-1].status.goingLeft && !player[i].status.goingLeft) changeDirect("KeyA", player[i], player[i-1])
-		else if (player[i-1].status.goingUp && !player[i].status.goingUp) changeDirect("KeyW", player[i], player[i-1])
-		else if (player[i-1].status.goingDown && !player[i].status.goingDown) changeDirect("KeyS", player[i], player[i-1])
+function snakeMovement(snake, cw, ch) {
+	snake[0].moving(cw, ch)
+	for (let i = 1; i < snake.length; i++) {
+		snake[i].speed=snake[i-1].speed
+		snake[i].moving(cw, ch)
+		if (snake[i-1].status.goingRight && !snake[i].status.goingRight) changeDirect("KeyD", snake[i], snake[i-1])
+		else if (snake[i-1].status.goingLeft && !snake[i].status.goingLeft) changeDirect("KeyA", snake[i], snake[i-1])
+		else if (snake[i-1].status.goingUp && !snake[i].status.goingUp) changeDirect("KeyW", snake[i], snake[i-1])
+		else if (snake[i-1].status.goingDown && !snake[i].status.goingDown) changeDirect("KeyS", snake[i], snake[i-1])
 	}
 }
-
-function changeDirect(to, playerbehind, playerinfront) {
-	if ((to=="KeyD" || to=="KeyA") && ((playerbehind.status.goingUp && playerbehind.pos.y<=playerinfront.pos.y) || (playerbehind.status.goingDown && playerbehind.pos.y>=playerinfront.pos.y))) {
-		playerbehind.pos.y=playerinfront.pos.y
-		if (to=="KeyD") playerbehind.pos.x=playerinfront.pos.x-playerbehind.size
-		else playerbehind.pos.x=playerinfront.pos.x+playerbehind.size
-		playerbehind.detectMovement("keydown", to)
-	} else if ((to=="KeyS" || to=="KeyW") && ((playerbehind.status.goingLeft && playerbehind.pos.x<=playerinfront.pos.x) || (playerbehind.status.goingRight && playerbehind.pos.x>=playerinfront.pos.x))) {
-		playerbehind.pos.x=playerinfront.pos.x 
-		if (to=="KeyS") playerbehind.pos.y=playerinfront.pos.y-playerbehind.size
-		else playerbehind.pos.y=playerinfront.pos.y+playerbehind.size
-		playerbehind.detectMovement("keydown", to)
+function changeDirect(to, snakebehind, snakeinfront) {
+	if ((to=="KeyD" || to=="KeyA") && ((snakebehind.status.goingUp && snakebehind.pos.y<=snakeinfront.pos.y) || (snakebehind.status.goingDown && snakebehind.pos.y>=snakeinfront.pos.y))) {
+		snakebehind.pos.y=snakeinfront.pos.y
+		if (to=="KeyD") snakebehind.pos.x=snakeinfront.pos.x-snakebehind.size
+		else snakebehind.pos.x=snakeinfront.pos.x+snakebehind.size
+		snakebehind.detectMovement("keydown", to)
+	} else if ((to=="KeyS" || to=="KeyW") && ((snakebehind.status.goingLeft && snakebehind.pos.x<=snakeinfront.pos.x) || (snakebehind.status.goingRight && snakebehind.pos.x>=snakeinfront.pos.x))) {
+		snakebehind.pos.x=snakeinfront.pos.x 
+		if (to=="KeyS") snakebehind.pos.y=snakeinfront.pos.y-snakebehind.size
+		else snakebehind.pos.y=snakeinfront.pos.y+snakebehind.size
+		snakebehind.detectMovement("keydown", to)
 	} 
 }
