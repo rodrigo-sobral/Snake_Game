@@ -18,16 +18,16 @@ class Play {
 
     growSnake() {
         const last_snake= this.snake[this.snake.length-1]
-        if (this.snake[0].status.goingRight) {
+        if (this.snake[this.snake.length-1].status.goingRight) {
             this.snake.push(new Snake(0, last_snake.pos.y, last_snake.size))
             this.snake[this.snake.length-1].pos.x= last_snake.pos.x-last_snake.size
-        } else if (this.snake[0].status.goingLeft) {
+        } else if (this.snake[this.snake.length-1].status.goingLeft) {
             this.snake.push(new Snake(0, last_snake.pos.y, last_snake.size))
             this.snake[this.snake.length-1].pos.x= last_snake.pos.x+last_snake.size
-        } else if (this.snake[0].status.goingUp) {
+        } else if (this.snake[this.snake.length-1].status.goingUp) {
             this.snake.push(new Snake(last_snake.pos.x, 0, last_snake.size))
             this.snake[this.snake.length-1].pos.y= last_snake.pos.y+last_snake.size
-        } else if (this.snake[0].status.goingDown) {
+        } else if (this.snake[this.snake.length-1].status.goingDown) {
             this.snake.push(new Snake(last_snake.pos.x, 0, last_snake.size))
             this.snake[this.snake.length-1].pos.y= last_snake.pos.y-last_snake.size
         }  Object.assign(this.snake[this.snake.length-1].status, last_snake.status)
