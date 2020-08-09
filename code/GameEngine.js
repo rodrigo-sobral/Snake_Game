@@ -15,26 +15,30 @@ function main() {
 
 function animLoop(ctx, play) {
 	var al = function() { animLoop(ctx, play) }
-	window.requestAnimationFrame(al)
+	let reqID = window.requestAnimationFrame(al)
 	
-	renderGame(ctx, play)
+	renderGame(ctx, reqID, play)
 }
 
-function detectKeyboard(snake_head) {
+function detectKeyboard(reqID, snake_head) {
 	function keyHandler(ev) { 
-		snake_head.detectMovement(ev.type, ev.code)
+		if (ev.code=="Escape") {
+			window.cancelAnimationFrame(reqID);
+			location.replace("../index.html")
+		}
+		else snake_head.detectMovement(ev.type, ev.code)
 	}
 	window.addEventListener("keydown", keyHandler)
 	window.addEventListener("keyup", keyHandler)
 }
 
-function renderGame(ctx, play) {
+function renderGame(ctx, reqID, play) {
 	let ch= ctx.canvas.height
 	let cw= ctx.canvas.width
 	play.updatePointsBox()
 
 	//	MOVEMENTS
-	detectKeyboard(play.snake[0])
+	detectKeyboard(reqID, play.snake[0])
 	snakeMovement(play.snake, cw, ch)
 
 	//	COLLISIONS

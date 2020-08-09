@@ -2,7 +2,7 @@ canvas {
     margin: auto;
     display: block;
     border: 5px solid #000000;
-    background-color: #123870;
+    background-color: rgb(23, 85, 23);
 }
 
 .points_text_box {
@@ -11,9 +11,4 @@ canvas {
     font-size: 200%;
     left: 42%;
     top: 90%;
-}
-
-@font-face {
-    font-family: arcadeFont;
-    src: url("../resources/fonts/retroFont.ttf");
 }

@@ -1,0 +1,45 @@
+button, nav, body, h1, img, p { position: absolute; cursor: default; }
+h1, button, p { font-family: arcadeFont; }
+body {
+    width: 99%;
+    height: 98%;
+    background-size: auto;
+    background-color: rgb(23, 85, 23);
+}
+nav{ width: 20%; height: 20%; }
+
+h1 {
+    cursor: default;
+    top: 2%;
+    font-family: arcadeFont;
+    font-size: 350%;
+}
+h1:hover { color: rgb(156, 154, 31); transition: color 2s; }
+h1:not(:hover) { color: black; transition: color 2s; }
+
+button {
+    background-color: rgb(131, 16, 16);
+    transition: background-color 1s, color 1s;
+    font-size: 2vw;
+    width: 100%;
+    height: 70px;
+    margin: 5%;
+    border-bottom: 6px inset rgba(0,0,0,.5);
+	border-left: 6px inset rgba(0,0,0,.5);
+	border-right: 6px inset rgba(255,255,255,.5);
+    border-top: 6px inset rgba(255,255,255,.5);
+    border-radius: 100%;
+}
+button:hover { background-color: rgb(156, 154, 31); }
+
+#backBtn {
+    width: 40%;
+    font-size: 120%;
+    top: 420%;
+    left: 10%;
+}
+
+@font-face {
+    font-family: arcadeFont;
+    src: url("../resources/fonts/retroFont.ttf");
+}

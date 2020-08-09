@@ -3,7 +3,7 @@
 class Snake extends Apple {
 	DEFAULT_SPEED= 3
 	MAX_SPEED=6
-	COLOR="#225f16"
+	COLOR="#064806"
 
     constructor(x, y, size) {
 		super(x, y, size)

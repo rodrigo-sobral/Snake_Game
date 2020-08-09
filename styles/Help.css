@@ -1,0 +1,12 @@
+p {font-size: 250%;}
+h1 { left: 43%; }
+
+#or_symbol, #equal_symbol1 { top: 33%;}
+#or_symbol { left: 39%; }
+#equal_symbol1 { left: 70%; }
+#equal_symbol2 { left: 50%; top: 62%; }
+
+#arrow_keys, #wasd_keys { top: 30%;  }
+#arrow_keys { left: 20%; }
+#wasd_keys { left: 50% ;}
+#esc_key { left: 40%; top: 65%; }

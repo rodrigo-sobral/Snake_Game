@@ -23,29 +23,18 @@ function main() {
     closeBtn.addEventListener("mouseenter", playSound);
 }
 
-function menuPlay() {
-    location.replace("html/menu_play.html")
-}
+function menuPlay() { location.replace("../../html/Careers.html") }
 
+function menuOptions() { location.replace("../../html/Ranking.html") }
 
-function menuOptions() {
-    location.replace("html/menu_options.html")
-}
+function menuHelp() { location.replace("../../html/Help.html") }
 
-function menuHelp() {
-    location.replace("html/menu_help.html")
-}
+function menuCredits() { location.replace("../../html/Credits.html") }
 
-function menuCredits() {
-    location.replace("html/menu_credits.html")
-}
-
-function menuClose() {
-    window.close();
-}
+function menuClose() { window.close(); }
 
 function playSound() {
-    let sound = new Audio("resources/sounds/buttonSwitchSound.mp3")
+    let sound = new Audio("../../resources/sounds/buttonSwitchSound.mp3")
     let music = JSON.parse(localStorage.getItem('sound'));
     sound.volume = music.effectsVolume
     sound.play()
