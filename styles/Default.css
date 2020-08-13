@@ -1,5 +1,5 @@
-button, nav, body, h1, img, p { position: absolute; cursor: default; }
-h1, button, p { font-family: arcadeFont; }
+button, nav, body, h1, img, p, input, table { position: absolute; cursor: default; }
+h1, button, p, input, table { font-family: arcadeFont; }
 body {
     width: 99%;
     height: 98%;
@@ -20,7 +20,7 @@ h1:not(:hover) { color: black; transition: color 2s; }
 button {
     background-color: rgb(131, 16, 16);
     transition: background-color 1s, color 1s;
-    font-size: 2vw;
+    font-size: 120%;
     width: 100%;
     height: 70px;
     margin: 5%;
@@ -34,7 +34,6 @@ button:hover { background-color: rgb(156, 154, 31); }
 
 #backBtn {
     width: 40%;
-    font-size: 120%;
     top: 420%;
     left: 10%;
 }

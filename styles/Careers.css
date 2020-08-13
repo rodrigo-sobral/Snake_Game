@@ -1,1 +1,28 @@
 h1 { left: 42%; }
+
+#createBtn, #loadBtn { left: 185%; }
+#createBtn { top: 150%; }
+#loadBtn { top: 250%; }
+
+#name_input, #playBtn { visibility: hidden; }
+
+#name_input { 
+    left: 30%; 
+    font-size: 180%; 
+    top: 20%;
+}
+
+#name { 
+    left: 110%; 
+    width: 70%; 
+    background-color: rgb(56, 124, 56); 
+    height: 80%;
+    font-size: 60%;
+    top: 5%;
+}
+
+#playBtn {
+    width: 40%;
+    top: 420%;
+    left: 440%;
+}

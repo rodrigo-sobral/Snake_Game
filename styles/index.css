@@ -1,4 +1,4 @@
-button { position: relative; }
+button { position: relative; font-size: 200%;}
 
 h1 { left: 33%; }
 nav{ left: 37%; top: 190px; }

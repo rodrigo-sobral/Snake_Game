@@ -58,6 +58,13 @@ function renderGame(ctx, reqID, play) {
 	if (play.special_apple_on) play.special_apple.draw(ctx)
 	else play.apple.draw(ctx)
 	for (let i = 0; i < play.snake.length; i++) play.snake[i].draw(ctx)
+	let info_player = JSON.parse(localStorage.getItem(localStorage.getItem("__playing__")))
+	info_player["apples_eaten"]= play.apples_eaten
+	info_player["special_apples_eaten"]= play.special_apples_eaten
+	if (info_player["points_record"] < play.points_got) info_player["points_record"]= play.points_got
+	const actual= new Date()
+	info_player["record_date"]= actual.getDate().toString() + "-" + (actual.getMonth()+1).toString() + "-" + actual.getFullYear().toString()
+	localStorage.setItem(localStorage.getItem("__playing__"), JSON.stringify(info_player))
 }
 
 function snakeMovement(snake, cw, ch) {

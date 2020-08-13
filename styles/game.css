@@ -4,6 +4,7 @@ canvas {
     border: 5px solid #000000;
     background-color: rgb(23, 85, 23);
 }
+body { height: 97.9%; }
 
 .points_text_box {
     position: absolute;

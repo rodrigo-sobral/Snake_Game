@@ -35,7 +35,5 @@ function menuClose() { window.close(); }
 
 function playSound() {
     let sound = new Audio("../../resources/sounds/buttonSwitchSound.mp3")
-    let music = JSON.parse(localStorage.getItem('sound'));
-    sound.volume = music.effectsVolume
     sound.play()
 }

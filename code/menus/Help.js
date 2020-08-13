@@ -9,15 +9,16 @@ function main() {
 
     backBtn.addEventListener("mouseup", backToMenu);
     backBtn.addEventListener("mouseenter", playSound);
+    addEventListener("keydown", keyboardInteraction)
 }
 
-function backToMenu() {
-    location.replace("../../index.html")
+function keyboardInteraction(ev) {
+    if (ev.code=="Backspace") backToMenu()
 }
+
+function backToMenu() { location.replace("../../index.html") }
 
 function playSound() {
     let sound = new Audio("../../resources/sounds/buttonSwitchSound.mp3")
-    let music = JSON.parse(localStorage.getItem('sound'));
-    sound.volume = music.effectsVolume
     sound.play()
 }

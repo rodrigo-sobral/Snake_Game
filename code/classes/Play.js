@@ -9,7 +9,10 @@ class Play {
         //  Snake Vars
         this.snake= [new Snake(this.INIT_X, this.INIT_Y,  this.DEF_SQR_SZ)]
         this.points_got= 0
+        this.apples_eaten=0
+        this.special_apples_eaten=0
         this.dead=false
+
         //  Apples Vars
         this.apple= new Apple(Math.floor(Math.random()*(cw-this.DEF_SQR_SZ)), Math.floor(Math.random()*(ch-this.DEF_SQR_SZ)), this.DEF_SQR_SZ)
         this.special_apple= new SpecialApple(Math.floor(Math.random()*(cw-this.DEF_SQR_SZ)), Math.floor(Math.random()*(ch-this.DEF_SQR_SZ)), this.DEF_SQR_SZ)
@@ -38,11 +41,12 @@ class Play {
         $(".points_text_box").html("POINTS: "+this.points_got)
     }
 
-    eatApple(cw, ch) {
+    eatApple(cw, ch) {        
         if (!this.special_apple_on && this.apple.eaten) {
             this.apple.pos.x= Math.floor(Math.random()*(cw-this.DEF_SQR_SZ))
             this.apple.pos.y= Math.floor(Math.random()*(ch-this.DEF_SQR_SZ))
             this.apple.eaten=false
+            this.apples_eaten++
             this.points_got+=this.apple.POINTS
             this.growSnake()
             this.probablyPicker(this.special_apple)
@@ -50,6 +54,7 @@ class Play {
             this.special_apple.pos.x= Math.floor(Math.random()*(cw-this.DEF_SQR_SZ))
             this.special_apple.pos.y= Math.floor(Math.random()*(ch-this.DEF_SQR_SZ))
             this.special_apple.eaten=false
+            this.special_apples_eaten++
             this.points_got+=this.special_apple.POINTS
             this.growSnake()
             this.probablyPicker(this.special_apple)

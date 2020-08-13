@@ -1,1 +1,33 @@
 h1 { left: 38%; }
+
+table {
+    left: 20%;
+    top: 120%;
+    width: 340%;
+    overflow: hidden;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+#main_table td, #main_table th {
+    border: 3px solid black;
+    border-radius: 7px;    
+    padding: 0.5%;
+}
+
+#main_table tr:nth-child(even){ background-color: rgb(59, 105, 59); }
+
+#main_table tr:hover { background-color: #ac0606a6; }
+
+#main_table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgba(235, 211, 32, 0.733);
+    color: black;
+}
+
+#ranking_icon {
+    left: 360%;
+    top: 80%;
+    width: 150%;
+}
