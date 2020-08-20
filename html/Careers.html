@@ -7,15 +7,21 @@
         <link rel="stylesheet" href="../styles/Default.css">
         <link rel="stylesheet" href="../styles/Careers.css">
 
+        <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="../code/menus/Careers.js"></script>
     </head>
 
     <body>
         <h1>PLAY</h1>
-        <p id="name_input">INSERT YOUR NAME <input type="text" id="name" ></p>
+        <p id="name_request">NAME <input type="text" id="name_input" ></p>
+        <p id="player_selected"></p>
+        <p id="pass_request">PASSWORD <input type="password" id="pass_input" ></p>
         <nav>
             <button id="createBtn">CREATE CAREER</button>
             <button id="loadBtn">LOAD CAREER</button>
+
+            <!--INVISIBLE UNTIL LOADING MENU-->
+            <table id="players_table"> </table>
 
             <button id="playBtn">PLAY</button>
 

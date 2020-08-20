@@ -3,23 +3,60 @@ h1 { left: 42%; }
 #createBtn, #loadBtn { left: 185%; }
 #createBtn { top: 150%; }
 #loadBtn { top: 250%; }
+/*-------------------------------*/
 
-#name_input, #playBtn { visibility: hidden; }
+/*CREATE CAREER*/
+#name_request, #playBtn, #pass_request, #player_selected { visibility: hidden; }
 
-#name_input { 
-    left: 30%; 
-    font-size: 180%; 
-    top: 20%;
-}
+#name_request, #pass_request, #player_selected { font-size: 180%; left: 30%; }
+#name_request { top: 30%; }
+#pass_request { top: 40%; }
 
-#name { 
+#name_input, #pass_input { 
     left: 110%; 
-    width: 70%; 
     background-color: rgb(56, 124, 56); 
     height: 80%;
     font-size: 60%;
     top: 5%;
 }
+
+#name_input { left: 250%; }
+#pass_input { left: 125%; }
+
+
+/*-------------------------------*/
+
+/*LOADING CAREER*/
+table {
+    left: 173%;
+    top: 120%;
+    width: 140%;
+    height: 45%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    visibility: hidden;
+    overflow: hidden;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+#players_table td, #players_table th {
+    border: 3px solid black;
+    border-radius: 7px;    
+    padding: 0.5%;
+}
+
+#players_table tr:nth-child(even){ background-color: rgb(59, 105, 59); }
+
+#players_table tr:hover { background-color: #ac0606a6; }
+
+#players_table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgba(235, 211, 32, 0.733);
+    color: black;
+}
+/*-------------------------------*/
 
 #playBtn {
     width: 40%;

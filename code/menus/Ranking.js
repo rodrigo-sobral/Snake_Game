@@ -11,7 +11,9 @@ function main() {
 
     //  LOAD PLAYERS
     let players_array= new Array(localStorage.length-1)
-    for (let i = 0; i < localStorage.length-1; i++) players_array[i] = JSON.parse(localStorage.getItem(localStorage.key(i)))
+    for (let i_storage = 0, i_array=0; i_storage < localStorage.length; i_storage++) {
+        if (localStorage.key(i_storage)!="__playing__") players_array[i_array++] = JSON.parse(localStorage.getItem(localStorage.key(i_storage)))
+    }
     orderBy(undefined, table, players_array)
 
     head_row.addEventListener("mouseup", goOrder)
@@ -25,23 +27,19 @@ function main() {
 }
 
 function orderBy(argument, table, players_array) {
-    /*{
-        "creation_date" : actual_date,
-        "record_date" : undefined,
-        "points_record" : 0,
-        "apples_eaten" : 0,
-        "special_apples_eaten" : 0
-    }*/
+    // the argument will be the type of ordering that will be done
     for (let i = 0; i < players_array.length; i++) {
         const new_row= document.createElement("tr")
-        addcolumn(new_row, undefined, i+1)
-        addcolumn(new_row, undefined, localStorage.key(i))
-        addcolumn(new_row, players_array[i], "creation_date")
-        addcolumn(new_row, players_array[i], "points_record")
-        addcolumn(new_row, players_array[i], "record_date")
-        addcolumn(new_row, players_array[i], "apples_eaten")
-        addcolumn(new_row, players_array[i], "special_apples_eaten")
-        table.appendChild(new_row)
+        if (localStorage.key(i)!="__playing__") {
+            addcolumn(new_row, undefined, i+1)
+            addcolumn(new_row, undefined, localStorage.key(i))
+            addcolumn(new_row, players_array[i], "creation_date")
+            addcolumn(new_row, players_array[i], "points_record")
+            addcolumn(new_row, players_array[i], "record_date")
+            addcolumn(new_row, players_array[i], "apples_eaten")
+            addcolumn(new_row, players_array[i], "special_apples_eaten")
+            table.appendChild(new_row)
+        }
     }
 }
 

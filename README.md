@@ -9,6 +9,25 @@ Or see the source code directly in a text editor
 
 ## Situation Point
 
+* Doing
+    
+
+
+* To Do
+
+    [ ] - Death System
+
+    [ ] - Apples Generation outside of snake
+
+    [ ] - Credits Menu
+
+    [ ] - Order Ranking by the different arguments
+
+    [ ] - Game Algorithm Otimization
+
+    [ ] - Fix Esc key bug instead of Backspace
+
+
 * Done
 
     [x] - Game Engine
@@ -23,16 +42,4 @@ Or see the source code directly in a text editor
 
     [x] - JSON Database
 
-* To Do
-
-    [ ] - Death System
-
-    [ ] - Apples Generation outside of snake
-
-    [ ] - Load Career Menu and System
-
-    [ ] - Credits Menu
-
-    [ ] - Correct backspace button in help menu instead of esc
-
-    [ ] - Game Algorithm Otimization
+    [x] - Load Career Menu and System
