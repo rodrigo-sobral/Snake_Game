@@ -1,5 +1,5 @@
 # Snake_Game
-Snake Game made in Javascript, HTML and CSS
+Snake Game made in mainly pure Javascript, HTML and CSS
  
 You can try it clicking [here](https://rodrigosobral2000.github.io/Snake_Game/)
 
@@ -12,22 +12,13 @@ Or see the source code directly in a text editor
 * Doing
     
 
-
 * To Do
 
     [ ] - Death System
 
-    [ ] - Apples Generation outside of snake
-
-    [ ] - Credits Menu
-
-    [ ] - Order Ranking by the different arguments
-
     [ ] - Game Algorithm Otimization
 
-    [ ] - Fix Esc key bug instead of Backspace
-
-
+    
 * Done
 
     [x] - Game Engine
@@ -43,3 +34,11 @@ Or see the source code directly in a text editor
     [x] - JSON Database
 
     [x] - Load Career Menu and System
+
+    [x] - Fix Esc key bug instead of Backspace
+
+    [x] - Apples Generation outside of snake
+
+    [x] - Order Ranking by the different arguments
+
+    [x] - Credits Menu

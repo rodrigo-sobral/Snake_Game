@@ -10,48 +10,113 @@ function main() {
     let table= document.getElementById("main_table")
 
     //  LOAD PLAYERS
-    let players_array= new Array(localStorage.length-1)
-    for (let i_storage = 0, i_array=0; i_storage < localStorage.length; i_storage++) {
-        if (localStorage.key(i_storage)!="__playing__") players_array[i_array++] = JSON.parse(localStorage.getItem(localStorage.key(i_storage)))
+    let players_array=undefined
+    if (localStorage.length!=0) {
+        players_array= new Array(localStorage.length-1)
+        for (let i_storage = 0, i_array=0; i_storage < localStorage.length; i_storage++) {
+            if (localStorage.key(i_storage)!="__playing__") players_array[i_array++] = JSON.parse(localStorage.getItem(localStorage.key(i_storage)))
+        }
+        players_array= sortBy({"id":"by_points"}, table, players_array)
     }
-    orderBy(undefined, table, players_array)
 
     head_row.addEventListener("mouseup", goOrder)
     head_row.addEventListener("mouseenter", playSound)
 
     backBtn.addEventListener("mouseup", backToMenu)
     backBtn.addEventListener("mouseenter", playSound)
-    addEventListener("keydown", keyboardInteraction)
+    addEventListener("keyup", keyboardInteraction)
 
-    function goOrder(ev) { orderBy(ev.target, table, players_array) }
+    function goOrder(ev) { players_array= sortBy(ev.target, table, players_array) }
 }
 
-function orderBy(argument, table, players_array) {
-    // the argument will be the type of ordering that will be done
-    for (let i = 0; i < players_array.length; i++) {
-        const new_row= document.createElement("tr")
-        if (localStorage.key(i)!="__playing__") {
-            addcolumn(new_row, undefined, i+1)
-            addcolumn(new_row, undefined, localStorage.key(i))
-            addcolumn(new_row, players_array[i], "creation_date")
-            addcolumn(new_row, players_array[i], "points_record")
-            addcolumn(new_row, players_array[i], "record_date")
-            addcolumn(new_row, players_array[i], "apples_eaten")
-            addcolumn(new_row, players_array[i], "special_apples_eaten")
-            table.appendChild(new_row)
-        }
+/*      RANKING FILLING     */
+function sortBy(sort_argument, table, players_array) {
+    if (players_array==undefined) { alert("First, create a career!"); return }
+    let upToLow=false
+    if (sort_argument.id=="by_pos") {
+        if (sort_argument.selected!="by_pos") {
+            upToLow=true
+            sort_argument.selected="by_pos"
+        } else sort_argument.selected=undefined
+    } else if (sort_argument.id=="by_name") {
+        if (sort_argument.selected=="by_name") players_array= mergeSort(players_array, "name", true)
+        else players_array= mergeSort(players_array, "name", false)
+    } else if (sort_argument.id=="by_points") {
+        if (sort_argument.selected=="by_points") players_array= mergeSort(players_array, "points_record", true)
+        else players_array= mergeSort(players_array, "points_record", false)
+    } else if (sort_argument.id=="by_apples") {
+        if (sort_argument.selected=="by_apples") players_array= mergeSort(players_array, "apples_eaten", true)
+        else players_array= mergeSort(players_array, "apples_eaten", false)
+    } else if (sort_argument.id=="by_special_apples") {
+        if (sort_argument.selected=="by_special_apples") players_array= mergeSort(players_array, "special_apples_eaten", true)
+        else players_array= mergeSort(players_array, "special_apples_eaten", false)
     }
+    //else if (sort_argument.id=="by_creation_date")
+    //else if (sort_argument.id=="by_record_date")
+    
+    while (table.lastChild.id!="") table.removeChild(table.lastChild)
+    
+    if (!upToLow) for (let i = 0; i < players_array.length; i++) fillTable(table, players_array, i)
+    else for (let i = players_array.length-1; i >= 0; i--) fillTable(table, players_array, i)
+
+    return players_array
 }
 
-function addcolumn(row, player, argument) {
+function fillTable(table, players_array, i) {
+    const new_row= document.createElement("tr")
+    addcolumn(new_row, undefined, i+1)
+    addcolumn(new_row, players_array[i], "name")
+    addcolumn(new_row, players_array[i], "creation_date")
+    addcolumn(new_row, players_array[i], "points_record")
+    addcolumn(new_row, players_array[i], "record_date")
+    addcolumn(new_row, players_array[i], "apples_eaten")
+    addcolumn(new_row, players_array[i], "special_apples_eaten")
+    new_row.id="player_row"
+    table.appendChild(new_row)
+}
+
+function addcolumn(row, player, sort_argument) {
     const new_column= document.createElement("td")
-    if (player==undefined) new_column.innerHTML= argument
-    else new_column.innerHTML= player[argument]
+    if (player==undefined) new_column.innerHTML= sort_argument
+    else new_column.innerHTML= player[sort_argument]
     row.appendChild(new_column)
 }
 
+/*      SORTING     */
+function mergeSort(players_array, sort_argument, upToLow) {
+    if (players_array.length < 2) return players_array
+
+    const middle = parseInt(players_array.length / 2)
+    const left   = players_array.slice(0, middle)
+    const right  = players_array.slice(middle, players_array.length)
+
+    return merge(mergeSort(left), mergeSort(right), sort_argument, upToLow)
+}
+
+function merge(left, right, sort_argument, upToLow) {
+    let result = []
+
+    if (upToLow) {
+        while (left.length && right.length) {
+            if (left[sort_argument] >= right[sort_argument]) result.push(left.shift())
+            else result.push(right.shift());
+        }
+    } else {
+        while (left.length && right.length) {
+            if (left[sort_argument] <= right[sort_argument]) result.push(left.shift())
+            else result.push(right.shift());
+        }
+    }
+
+    while (left.length) result.push(left.shift());
+    while (right.length) result.push(right.shift());
+
+    return result;
+}
+
+/*      DEFAULT     */
 function keyboardInteraction(ev) {
-    if (ev.code=="Backspace") backToMenu()
+    if (ev.code=="Escape") backToMenu()
 }
 
 function backToMenu() { location.replace("../../index.html") }

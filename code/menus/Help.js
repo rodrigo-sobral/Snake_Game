@@ -9,11 +9,11 @@ function main() {
 
     backBtn.addEventListener("mouseup", backToMenu);
     backBtn.addEventListener("mouseenter", playSound);
-    addEventListener("keydown", keyboardInteraction)
+    addEventListener("keyup", keyboardInteraction)
 }
 
 function keyboardInteraction(ev) {
-    if (ev.code=="Backspace") backToMenu()
+    if (ev.code=="Escape") backToMenu()
 }
 
 function backToMenu() { location.replace("../../index.html") }

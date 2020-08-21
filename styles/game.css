@@ -1,10 +1,10 @@
 canvas {
-    margin: auto;
+    margin: 0px;
     display: block;
     border: 5px solid #000000;
     background-color: rgb(23, 85, 23);
 }
-body { height: 97.9%; }
+body { height: 97.9%; margin: 0px;}
 
 .points_text_box {
     position: absolute;

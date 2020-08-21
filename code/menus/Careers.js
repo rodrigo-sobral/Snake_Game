@@ -31,7 +31,7 @@ function main() {
     backBtn.addEventListener("mouseup", backToMenu)
     backBtn.addEventListener("mouseenter", playSound)
 
-    addEventListener("keydown", goToKeyboard)
+    addEventListener("keyup", goToKeyboard)
 
     function goToCreation() { createCareer(createBtn, loadBtn, playBtn, name_input, pass_request) }
     function goToLoading() { loadCareer(createBtn, loadBtn, players_table) }
@@ -41,6 +41,7 @@ function main() {
     function goToKeyboard(ev) { keyboardInteraction(ev, name_input, pass_input, playBtn) }
 }
 
+/*    CREATING    */
 function resetInputs(name_input) {    
     const predefined= "player"
     if (localStorage.length==0) name_input.value=predefined+(localStorage.length+1).toString()
@@ -54,6 +55,7 @@ function createCareer(createBtn, loadBtn, playBtn, name_input, pass_request) {
     playBtn.style.visibility= name_request.style.visibility= pass_request.style.visibility= "visible"
 }
 
+/*    LOADING    */
 function loadCareer(createBtn, loadBtn, players_table) {
     if (localStorage.length==0) { alert("First, create a career!"); return }
     createBtn.style.visibility= loadBtn.style.visibility= "hidden"
@@ -66,18 +68,12 @@ function loadCareer(createBtn, loadBtn, players_table) {
     
     for (let i = 0; i < players_array.length; i++) {
         const new_row= document.createElement("tr")
-        addcolumn(new_row, undefined, localStorage.key(i))
-        new_row.id=localStorage.key(i)
+        const new_column= document.createElement("td")
+        new_column.innerHTML= new_row.id= players_array[i]["name"]
+        new_row.appendChild(new_column)
         new_row.addEventListener("mouseenter", playSound)
         players_table.appendChild(new_row)
     }
-}
-
-function addcolumn(row, player, argument) {
-    const new_column= document.createElement("td")
-    if (player==undefined) new_column.innerHTML= argument
-    else new_column.innerHTML= player[argument]
-    row.appendChild(new_column)
 }
 
 function selectPlayer(ev, pass_input, pass_request, info_player_selected, playBtn) {
@@ -91,6 +87,7 @@ function selectPlayer(ev, pass_input, pass_request, info_player_selected, playBt
     }
 }
 
+/*    START PLAYING    */
 function playFirstGame(name_input, pass_input) { 
     if (name_input.value=="") { alert("ERROR! Insert your NAME!"); return }
     else if (pass_input.value=="") { alert("ERROR! Insert a PASSWORD!"); return }
@@ -107,10 +104,11 @@ function playFirstGame(name_input, pass_input) {
     const actual_date= actual.getDate().toString() + "-" + (actual.getMonth()+1).toString() + "-" + actual.getFullYear().toString()
     //const actual_hour= actual.getHours().toString() + ":" + actual.getMinutes().toString() + ":" + actual.getSeconds().toString()
 
-    const key= (localStorage.length)**2
+    const key= (localStorage.length)**2 * Math.floor(1+Math.random()*100)
     const new_player= {
+        "name" : name_input.value,
         "key" : key,
-        "password" : encript(pass_input.value, key),
+        "password" : desEncript(pass_input.value, key, true),
         "creation_date" : actual_date,
         "record_date" : undefined,
         "points_record" : 0,
@@ -125,19 +123,20 @@ function playFirstGame(name_input, pass_input) {
 function playGame(name_input, pass_input, info_player_selected) {
     if (info_player_selected.style.visibility=="visible") {
         const player_selected= JSON.parse(localStorage.getItem(info_player_selected.innerHTML))
-        console.log(desencript(player_selected["password"], player_selected["key"]))
-        if (pass_input.value.toUpperCase() == desencript(player_selected["password"], player_selected["key"])) {
-            localStorage.setItem("__playing__", name_input.value)
+        if (pass_input.value.toUpperCase() == desEncript(player_selected["password"], player_selected["key"], false)) {
+            localStorage.setItem("__playing__", info_player_selected.innerHTML)
             location.replace("../../html/Game.html") 
         } else { alert("Wrong Password!"); pass_input.value="" }
     } else playFirstGame(name_input, pass_input)
 }
 
-function keyboardInteraction(ev, name_input, pass_input, playBtn) {
-    if (ev.code=="Escape") backToMenu()
-    else if (ev.code=="Enter" && playBtn.style.visibility=="visible") playFirstGame(name_input, pass_input)
+/*    SECURITY    */
+function desEncript(password, key, encript) {
+    if (encript) return password.toUpperCase().replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0)-65 + key ) % 26 + 65))
+    else return password.toUpperCase().replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0)-65 - key ) % 26 + 65))
 }
 
+/*    DEFAULT    */
 function backToMenu() { location.replace("../../index.html") }
 
 function playSound() {
@@ -145,11 +144,7 @@ function playSound() {
     sound.play()
 }
 
-
-/*    SECURE    */
-function encript(password, key) {
-    return password.toUpperCase().replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0)-65 + key ) % 26 + 65));
-}
-function desencript(password, key) {
-    return password.toUpperCase().replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0)-65 - key ) % 26 + 65));
+function keyboardInteraction(ev, name_input, pass_input, playBtn) {
+    if (ev.code==="Escape") backToMenu()
+    else if (ev.code=="Enter" && playBtn.style.visibility=="visible") playFirstGame(name_input, pass_input)
 }

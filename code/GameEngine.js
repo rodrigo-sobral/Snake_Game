@@ -20,13 +20,13 @@ function animLoop(ctx, play) {
 	renderGame(ctx, reqID, play)
 }
 
-function detectKeyboard(reqID, snake_head) {
+function detectKeyboard(reqID, play) {
 	function keyHandler(ev) { 
 		if (ev.code=="Escape") {
-			window.cancelAnimationFrame(reqID);
+			window.cancelAnimationFrame(reqID)
 			location.replace("../index.html")
 		}
-		else snake_head.detectMovement(ev.type, ev.code)
+		else play.snake[0].detectMovement(ev.type, ev.code)
 	}
 	window.addEventListener("keydown", keyHandler)
 	window.addEventListener("keyup", keyHandler)
@@ -38,7 +38,7 @@ function renderGame(ctx, reqID, play) {
 	play.updatePointsBox()
 
 	//	MOVEMENTS
-	detectKeyboard(reqID, play.snake[0])
+	detectKeyboard(reqID, play)
 	snakeMovement(play.snake, cw, ch)
 
 	//	COLLISIONS
@@ -51,20 +51,15 @@ function renderGame(ctx, reqID, play) {
 	}
 	
 	//	APPLE EATEN/GENERATION
-	play.eatApple(cw, ch)
+	play.eatApple(cw, ch, ctx)
 
 	//	DRAWING
 	ctx.clearRect(0, 0, cw, ch)	
 	if (play.special_apple_on) play.special_apple.draw(ctx)
 	else play.apple.draw(ctx)
 	for (let i = 0; i < play.snake.length; i++) play.snake[i].draw(ctx)
-	let info_player = JSON.parse(localStorage.getItem(localStorage.getItem("__playing__")))
-	info_player["apples_eaten"]= play.apples_eaten
-	info_player["special_apples_eaten"]= play.special_apples_eaten
-	if (info_player["points_record"] < play.points_got) info_player["points_record"]= play.points_got
-	const actual= new Date()
-	info_player["record_date"]= actual.getDate().toString() + "-" + (actual.getMonth()+1).toString() + "-" + actual.getFullYear().toString()
-	localStorage.setItem(localStorage.getItem("__playing__"), JSON.stringify(info_player))
+
+	saveData(play)
 }
 
 function snakeMovement(snake, cw, ch) {
@@ -90,4 +85,14 @@ function changeDirect(to, snakebehind, snakeinfront) {
 		else snakebehind.pos.y=snakeinfront.pos.y+snakebehind.size
 		snakebehind.detectMovement("keydown", to)
 	} 
+}
+
+function saveData(play) {
+	let info_player = JSON.parse(localStorage.getItem(localStorage.getItem("__playing__")))
+	info_player["apples_eaten"]= play.apples_eaten
+	info_player["special_apples_eaten"]= play.special_apples_eaten
+	if (info_player["points_record"] < play.points_got) info_player["points_record"]= play.points_got
+	const actual= new Date()
+	info_player["record_date"]= actual.getDate().toString() + "-" + (actual.getMonth()+1).toString() + "-" + actual.getFullYear().toString()
+	localStorage.setItem(localStorage.getItem("__playing__"), JSON.stringify(info_player))
 }

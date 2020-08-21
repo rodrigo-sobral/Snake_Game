@@ -1,1 +1,24 @@
 h1 { left: 38%; }
+
+p1 { color: rgb(156, 154, 31); }
+
+#main_text {
+    left: 20%;
+    top: 25%;
+    width: 60%;
+    font-size: 150%;
+    text-align: justify;
+}
+
+.logos { top: 60%; width: 10%; }
+#css_logo, #jquery_logo, #github_logo { top: 59%; }
+
+#html_logo { left: 10%; }
+#css_logo { left: 23%; }
+#js_logo { left: 36%; }
+
+#jquery_logo { left: 45%; width: 20%; }
+#git_logo { left: 64%; }
+#github_logo { left: 77%; width: 11%; }
+
+#note_text { left: 65%; top: 93%; }
