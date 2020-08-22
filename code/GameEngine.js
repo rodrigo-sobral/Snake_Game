@@ -22,7 +22,7 @@ function animLoop(ctx, play) {
 
 function detectKeyboard(reqID, play) {
 	function keyHandler(ev) { 
-		if (ev.code=="Escape") {
+		if (ev.code=="Escape" && ev.type=="keyup") {
 			window.cancelAnimationFrame(reqID)
 			location.replace("../index.html")
 		}

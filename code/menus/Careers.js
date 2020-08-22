@@ -117,7 +117,7 @@ function playFirstGame(name_input, pass_input) {
     }
     localStorage.setItem("__playing__", name_input.value)
     localStorage.setItem(name_input.value, JSON.stringify(new_player))
-    location.replace("../../html/Game.html") 
+    location.replace("./Game.html") 
 }
 
 function playGame(name_input, pass_input, info_player_selected) {
@@ -125,7 +125,7 @@ function playGame(name_input, pass_input, info_player_selected) {
         const player_selected= JSON.parse(localStorage.getItem(info_player_selected.innerHTML))
         if (pass_input.value.toUpperCase() == desEncript(player_selected["password"], player_selected["key"], false)) {
             localStorage.setItem("__playing__", info_player_selected.innerHTML)
-            location.replace("../../html/Game.html") 
+            location.replace("./Game.html") 
         } else { alert("Wrong Password!"); pass_input.value="" }
     } else playFirstGame(name_input, pass_input)
 }
