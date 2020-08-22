@@ -1,8 +1,8 @@
 button, nav, body, h1, img, p, input, table { position: absolute; cursor: default; }
 h1, button, p, input, table { font-family: arcadeFont; }
 body {
-    width: 99%;
-    height: 98%;
+    width: 98%;
+    height: 97.5%;
     background-size: auto;
     background-color: rgb(23, 85, 23);
 }

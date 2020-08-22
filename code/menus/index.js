@@ -23,17 +23,17 @@ function main() {
     closeBtn.addEventListener("mouseenter", playSound);
 }
 
-function menuPlay() { location.replace("../../html/Careers.html") }
+function menuPlay() { location.replace("html/Careers.html") }
 
-function menuOptions() { location.replace("../../html/Ranking.html") }
+function menuOptions() { location.replace("html/Ranking.html") }
 
-function menuHelp() { location.replace("../../html/Help.html") }
+function menuHelp() { location.replace("html/Help.html") }
 
-function menuCredits() { location.replace("../../html/Credits.html") }
+function menuCredits() { location.replace("html/Credits.html") }
 
 function menuClose() { window.close(); }
 
 function playSound() {
-    let sound = new Audio("../../resources/sounds/buttonSwitchSound.mp3")
+    let sound = new Audio("resources/sounds/buttonSwitchSound.mp3")
     sound.play()
 }
