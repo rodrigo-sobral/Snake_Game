@@ -18,6 +18,7 @@ h1:hover { color: rgb(156, 154, 31); transition: color 2s; }
 h1:not(:hover) { color: black; transition: color 2s; }
 
 button {
+    outline: none;
     background-color: rgb(131, 16, 16);
     transition: background-color 1s, color 1s;
     font-size: 120%;

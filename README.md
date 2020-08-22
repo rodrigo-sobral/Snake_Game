@@ -16,6 +16,10 @@ Or see the source code directly in a text editor
 
     [ ] - Death System
 
+    [ ] - Death Animation
+
+    [ ] - Quitting Animation
+
     [ ] - Game Algorithm Otimization
 
     

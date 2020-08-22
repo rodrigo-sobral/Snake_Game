@@ -89,10 +89,12 @@ function changeDirect(to, snakebehind, snakeinfront) {
 
 function saveData(play) {
 	let info_player = JSON.parse(localStorage.getItem(localStorage.getItem("__playing__")))
-	info_player["apples_eaten"]= play.apples_eaten
-	info_player["special_apples_eaten"]= play.special_apples_eaten
-	if (info_player["points_record"] < play.points_got) info_player["points_record"]= play.points_got
-	const actual= new Date()
-	info_player["record_date"]= actual.getDate().toString() + "-" + (actual.getMonth()+1).toString() + "-" + actual.getFullYear().toString()
-	localStorage.setItem(localStorage.getItem("__playing__"), JSON.stringify(info_player))
+	if (info_player["points_record"] < play.points_got) {
+		info_player["points_record"]= play.points_got
+		info_player["apples_eaten"]= play.apples_eaten
+		info_player["special_apples_eaten"]= play.special_apples_eaten
+		const actual= new Date()
+		info_player["record_date"]= actual.getDate().toString() + "-" + (actual.getMonth()+1).toString() + "-" + actual.getFullYear().toString()
+		localStorage.setItem(info_player["name"], JSON.stringify(info_player))
+	}
 }
