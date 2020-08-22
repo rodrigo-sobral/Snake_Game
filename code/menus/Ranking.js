@@ -39,17 +39,13 @@ function sortBy(sort_argument, table, players_array) {
             sort_argument.selected="by_pos"
         } else sort_argument.selected=undefined
     } else if (sort_argument.id=="by_name") {
-        if (sort_argument.selected=="by_name") players_array= mergeSort(players_array, "name", true)
-        else players_array= mergeSort(players_array, "name", false)
+        players_array= mergeSort(players_array, "name")
     } else if (sort_argument.id=="by_points") {
-        if (sort_argument.selected=="by_points") players_array= mergeSort(players_array, "points_record", true)
-        else players_array= mergeSort(players_array, "points_record", false)
+        players_array= mergeSort(players_array, "points_record")
     } else if (sort_argument.id=="by_apples") {
-        if (sort_argument.selected=="by_apples") players_array= mergeSort(players_array, "apples_eaten", true)
-        else players_array= mergeSort(players_array, "apples_eaten", false)
+        players_array= mergeSort(players_array, "apples_eaten")
     } else if (sort_argument.id=="by_special_apples") {
-        if (sort_argument.selected=="by_special_apples") players_array= mergeSort(players_array, "special_apples_eaten", true)
-        else players_array= mergeSort(players_array, "special_apples_eaten", false)
+        players_array= mergeSort(players_array, "special_apples_eaten")
     }
     //else if (sort_argument.id=="by_creation_date")
     //else if (sort_argument.id=="by_record_date")
@@ -83,29 +79,22 @@ function addcolumn(row, player, sort_argument) {
 }
 
 /*      SORTING     */
-function mergeSort(players_array, sort_argument, upToLow) {
+function mergeSort(players_array, sort_argument) {
     if (players_array.length < 2) return players_array
 
     const middle = parseInt(players_array.length / 2)
     const left   = players_array.slice(0, middle)
     const right  = players_array.slice(middle, players_array.length)
 
-    return merge(mergeSort(left), mergeSort(right), sort_argument, upToLow)
+    return merge(mergeSort(left, sort_argument), mergeSort(right, sort_argument), sort_argument)
 }
 
-function merge(left, right, sort_argument, upToLow) {
+function merge(left, right, sort_argument) {
     let result = []
 
-    if (upToLow) {
-        while (left.length && right.length) {
-            if (left[sort_argument] >= right[sort_argument]) result.push(left.shift())
-            else result.push(right.shift());
-        }
-    } else {
-        while (left.length && right.length) {
-            if (left[sort_argument] <= right[sort_argument]) result.push(left.shift())
-            else result.push(right.shift());
-        }
+    while (left.length && right.length) {
+        if (left[0][sort_argument] >= right[0][sort_argument]) result.push(left.shift())
+        else result.push(right.shift());
     }
 
     while (left.length) result.push(left.shift());
