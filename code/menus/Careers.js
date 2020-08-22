@@ -38,7 +38,7 @@ function main() {
     function goToSelection(ev) { selectPlayer(ev, pass_input, pass_request, info_player_selected, playBtn) }
 
     function goToGame() { playGame(name_input, pass_input, info_player_selected) }
-    function goToKeyboard(ev) { keyboardInteraction(ev, name_input, pass_input, playBtn) }
+    function goToKeyboard(ev) { keyboardInteraction(ev, name_input, pass_input, info_player_selected, playBtn) }
 }
 
 /*    CREATING    */
@@ -144,7 +144,7 @@ function playSound() {
     sound.play()
 }
 
-function keyboardInteraction(ev, name_input, pass_input, playBtn) {
+function keyboardInteraction(ev, name_input, pass_input, info_player_selected, playBtn) {
     if (ev.code==="Escape") backToMenu()
-    else if (ev.code=="Enter" && playBtn.style.visibility=="visible") playFirstGame(name_input, pass_input)
+    else if (ev.code=="Enter" && playBtn.style.visibility=="visible") playGame(name_input, pass_input, info_player_selected)
 }
