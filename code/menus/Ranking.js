@@ -1,9 +1,3 @@
-"use strict";
-
-(function () {
-    window.addEventListener("load", main);
-}());
-
 function main() {
     let backBtn = document.getElementById("backBtn")
     let head_row = document.getElementById("head_row")
@@ -113,4 +107,12 @@ function backToMenu() { location.replace("../index.html") }
 function playSound() {
     let sound = new Audio("../resources/sounds/buttonSwitchSound.mp3")
     sound.play()
+}
+
+function downloadData() {
+    try {
+        console.log(JSON.parse(document.cookie))   
+    } catch (err) {
+        throw "Json Format Error"
+    }
 }

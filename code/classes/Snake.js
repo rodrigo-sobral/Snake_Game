@@ -1,5 +1,3 @@
-"use strict"
-
 class Snake extends Apple {
 	DEFAULT_SPEED= 3
 	MAX_SPEED=6

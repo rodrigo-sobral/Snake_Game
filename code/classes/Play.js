@@ -1,4 +1,3 @@
-"use strict"
 $ = jQuery
 
 class Play {

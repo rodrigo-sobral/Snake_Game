@@ -1,9 +1,3 @@
-"use strict";
-
-(function () {
-    window.addEventListener("load", main);
-}());
-
 function main() {
     let playBtn = document.getElementById("playBtn");
     let optionsBtn = document.getElementById("optionsBtn");
@@ -13,7 +7,7 @@ function main() {
 
     playBtn.addEventListener("mouseup", menuPlay);
     playBtn.addEventListener("mouseenter", playSound);
-    optionsBtn.addEventListener("mouseup", menuOptions);
+    optionsBtn.addEventListener("mouseup", menuRanking);
     optionsBtn.addEventListener("mouseenter", playSound);
     helpBtn.addEventListener("mouseup", menuHelp);
     helpBtn.addEventListener("mouseenter", playSound);
@@ -25,7 +19,7 @@ function main() {
 
 function menuPlay() { location.replace("html/Careers.html") }
 
-function menuOptions() { location.replace("html/Ranking.html") }
+function menuRanking() { location.replace("html/Ranking.html") }
 
 function menuHelp() { location.replace("html/Help.html") }
 

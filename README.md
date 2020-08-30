@@ -22,6 +22,8 @@ Or see the source code directly in a text editor
 
     [ ] - Game Algorithm Otimization
 
+    [ ] - Create an online storage
+
     
 * Done
 

@@ -1,9 +1,4 @@
-"use strict";
 $ = jQuery;
-
-(function () {
-    window.addEventListener("load", main)
-}())
 
 function main() {
     let backBtn = document.getElementById("backBtn")
@@ -32,6 +27,8 @@ function main() {
     backBtn.addEventListener("mouseenter", playSound)
 
     addEventListener("keyup", goToKeyboard)
+
+    downloadData()
 
     function goToCreation() { createCareer(createBtn, loadBtn, playBtn, name_input, pass_request) }
     function goToLoading() { loadCareer(createBtn, loadBtn, players_table) }
@@ -104,7 +101,7 @@ function playFirstGame(name_input, pass_input) {
     const actual_date= actual.getDate().toString() + "-" + (actual.getMonth()+1).toString() + "-" + actual.getFullYear().toString()
     //const actual_hour= actual.getHours().toString() + ":" + actual.getMinutes().toString() + ":" + actual.getSeconds().toString()
 
-    const key= (localStorage.length)**2 * Math.floor(1+Math.random()*100)
+    const key= (localStorage.length+1)**2 * Math.floor(1+Math.random()*100)
     const new_player= {
         "name" : name_input.value,
         "key" : key,
@@ -117,6 +114,7 @@ function playFirstGame(name_input, pass_input) {
     }
     localStorage.setItem("__playing__", name_input.value)
     localStorage.setItem(name_input.value, JSON.stringify(new_player))
+    uploadData()
     location.replace("./Game.html") 
 }
 
@@ -125,6 +123,7 @@ function playGame(name_input, pass_input, info_player_selected) {
         const player_selected= JSON.parse(localStorage.getItem(info_player_selected.innerHTML))
         if (pass_input.value.toUpperCase() == desEncript(player_selected["password"], player_selected["key"], false)) {
             localStorage.setItem("__playing__", info_player_selected.innerHTML)
+            uploadData()
             location.replace("./Game.html") 
         } else { alert("Wrong Password!"); pass_input.value="" }
     } else playFirstGame(name_input, pass_input)
@@ -147,4 +146,25 @@ function playSound() {
 function keyboardInteraction(ev, name_input, pass_input, info_player_selected, playBtn) {
     if (ev.code==="Escape") backToMenu()
     else if (ev.code=="Enter" && playBtn.style.visibility=="visible") playGame(name_input, pass_input, info_player_selected)
+}
+
+function uploadData() {
+    document.cookie="["
+    for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i)!="__playing__") {
+            document.cookie+=localStorage.getItem(localStorage.key(i))
+            if (i!=localStorage.length-1) document.cookie+=","
+        }
+    }
+    document.cookie+="]"
+}
+
+function downloadData() {
+    try {
+        const players= JSON.parse(document.cookie)
+        localStorage.clear()
+        for (let i = 0; i < players.length; i++) localStorage.setItem(players[i]["name"], JSON.stringify(players[i]))
+    } catch (err) {
+        throw "Json Format Error"
+    }
 }
